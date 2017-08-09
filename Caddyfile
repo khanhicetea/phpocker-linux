@@ -1,0 +1,17 @@
+test.dev:80 {
+	tls off
+	root public_html
+
+	# Need to run this startup once, don't remove if you need PHP
+	startup phpfpm/start.sh
+}
+
+php.dev:80 {
+	tls off
+	root public_html/php_dev
+
+	fastcgi / 127.0.0.1:9000 php
+	rewrite {
+		to {path} {path}/ /index.php?{query}
+	}
+}
